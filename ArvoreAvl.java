@@ -8,11 +8,13 @@ public class ArvoreAvl {
   int balanceamento;
   String[] msgNiveis;
 
+  	//inicia um valor e insere na arvore
 	public void inserir(int k) {
 		No n = new No(k);
 		inserirAVL(this.raiz, n);
 	}
 
+	//faz verificações necessarias e acha  ao inserir
 	public void inserirAVL(No aComparar, No aInserir) {
 
 		if (aComparar == null) {
@@ -48,6 +50,7 @@ public class ArvoreAvl {
 		}
 	}
 
+	//verifica o nivel de balanceamento no nodo atual
 	public void verificarBalanceamento(No atual) {
 		setBalanceamento(atual);
 		balanceamento = atual.getBalanceamento();
@@ -79,10 +82,12 @@ public class ArvoreAvl {
   
 	}
 
+	//remove o valor desejado da arvore
 	public void remover(int k) {
 		removerAVL(this.raiz, k);
 	}
 
+	//faz verificações antes de remover
 	public void removerAVL(No atual, int k) {
 		if (atual == null) {
 			return;
@@ -101,6 +106,7 @@ public class ArvoreAvl {
 		}
 	}
 
+	//faz verificações antes de remover
 	public void removerNoEncontrado(No aRemover) {
 		No r;
 
@@ -142,6 +148,7 @@ public class ArvoreAvl {
 		r = null;
 	}
 
+	//faz rotação simples à esquerda
 	public No rotacaoEsquerda(No inicial) {
 
 		No direita = inicial.getDireita();
@@ -172,6 +179,7 @@ public class ArvoreAvl {
 		return direita;
 	}
 
+	//faz rotação simples à direita
 	public No rotacaoDireita(No inicial) {
 
 		No esquerda = inicial.getEsquerda();
@@ -202,16 +210,19 @@ public class ArvoreAvl {
 		return esquerda;
 	}
 
+	//faz rotação dupla à esquerda e depois direita
 	public No duplaRotacaoEsquerdaDireita(No inicial) {
 		inicial.setEsquerda(rotacaoEsquerda(inicial.getEsquerda()));
 		return rotacaoDireita(inicial);
 	}
 
+	//faz rotação dupla à direita e depois esquerda
 	public No duplaRotacaoDireitaEsquerda(No inicial) {
 		inicial.setDireita(rotacaoDireita(inicial.getDireita()));
 		return rotacaoEsquerda(inicial);
 	}
 
+	//diz o sucessor do numero atual
 	public No sucessor(No q) {
 		if (q.getDireita() != null) {
 			No r = q.getDireita();
@@ -229,6 +240,7 @@ public class ArvoreAvl {
 		}
 	}
 
+	//diz a altura da arvore: 0 para folhas, maior na raiz
 	public int altura(No atual) {
 		if (atual == null) {
 			return -1;
@@ -248,16 +260,19 @@ public class ArvoreAvl {
 		}
 	}
 
+	//coloca o balanceamento no elemento No
 	private void setBalanceamento(No no) {
 		no.setBalanceamento(altura(no.getDireita()) - altura(no.getEsquerda()));
 	}
 
+	//retorna um arraylist com os valores em ordem
 	final public ArrayList<No> inorder() {
 		ArrayList<No> ret = new ArrayList<No>();
 		inorder(raiz, ret);
 		return ret;
 	}
 
+	//Faz os laços e a recursividade do inOrder
 	final protected void inorder(No no, ArrayList<No> lista) {
 		if (no == null) {
 			return;
@@ -266,15 +281,18 @@ public class ArvoreAvl {
 		lista.add(no);
 		inorder(no.getDireita(), lista);
 	}
-        
-        public int getBalanceamento() {
+
+	//busca o valor do balanceamento da arvore
+	public int getBalanceamento() {
 		return balanceamento;
 	}
 
+	//diz se a arvore está vazia
 	public boolean isEmpty() {
 		return raiz == null;
 	}
 
+	//monta e mostra a Arvore
 	public void mostraArvore() {
 		if (isEmpty()){
 			System.out.println("Árvore vazia!");
@@ -285,6 +303,8 @@ public class ArvoreAvl {
 		mostraSubArvore(raiz.getEsquerda(),  separador);
 		mostraSubArvore(raiz.getDireita(), separador);
 	}
+
+	//laço recusrsivo para mostrar a arvore completa
 	private void mostraSubArvore(No no, String separador) {
 		if (no != null) {
 			No pai = no.getPai();
